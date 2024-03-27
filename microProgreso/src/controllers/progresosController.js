@@ -23,3 +23,5 @@ router.post('/progresos/crearProgreso', async (req, res) => {
     result = await rutinasModel.selectUserRoutines(descripcion, objetivo, objetivoKilos);
     res.json(result);
 });
+
+module.exports  = router;
