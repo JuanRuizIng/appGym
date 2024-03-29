@@ -17,8 +17,8 @@ async function getProgressByUser(usuario) {
 };
 
 async function newProgress(progreso) {
-    const result = await connection.query('INSERT INTO progreso VALUES (null, ?, ?, ?, Now())', [progreso.usuario, progreso.rutina, progreso.nuevoPesoUsuario]);
-    return result[0];
+    const result = await connection.query('INSERT INTO progreso VALUES (DEFAULT, ?, ?, ?, Now())', [progreso.nombre, progreso.rutina, progreso.pesoNuevo]);
+    return result;
 };
 
 module.exports = {

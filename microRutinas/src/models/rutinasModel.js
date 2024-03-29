@@ -11,24 +11,32 @@ async function getRoutines() {
     return result[0];
 };
 
-async function selectUserRoutines(id, usuario) {
-    const result = await connection.query('INSERT INTO usuarios VALUES (null, null, null, null, null, null, ?) WHERE usuario = ?', [id, usuario]);
+async function getRoutinesById(rutinaUsuario) {
+    const result = await connection.query('SELECT * FROM rutinas WHERE id = ?', [rutinaUsuario]);
     return result[0];
 };
 
 async function getRoutinesSelected(id) {
-    const result = await connection.query('SELECT * FROM rutinas WHERE id = ?', id);
+    const result = await connection.query('SELECT * FROM rutinas WHERE id = ?', [id]);
     return result[0];
 };
 
 async function createRoutines(descripcion, objetivo, objetivoKilos) {
-    const result = await connection.query('INSERT INTO rutinas VALUES (null, ?, ?, ?)', [descripcion, objetivo, objetivoKilos]);
-    return result[0];
+    const result = await connection.query('INSERT INTO rutinas VALUES (DEFAULT, ?, ?, ?)', [descripcion, objetivo, objetivoKilos]);
+    return result;
 };
+
+async function selectUserRoutines(rutina, usuario) {
+    const result = await connection.query(
+        'INSERT INTO usuarios (usuario, rutina) VALUES (?, ?) ON DUPLICATE KEY UPDATE rutina = VALUES(rutina)',
+        [usuario, rutina]);
+    return result;
+    };
 
 module.exports = {
     getRoutines,
-    selectUserRoutines,
     getRoutinesSelected,
-    createRoutines
+    createRoutines,
+    selectUserRoutines,
+    getRoutinesById
 };
