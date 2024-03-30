@@ -19,7 +19,7 @@ router.get('/progresos/:usuario', async (req, res) => {
 router.post('/crearProgreso', async (req, res) => {
     const usuario = req.body.usuario;
     //Creación del progreso
-    const response = await axios.get(`http://localhost:3001/usuarios/${usuario}`);
+    const response = await axios.get(`http://192.168.100.2:3001/usuarios/${usuario}`);
     const usuarioCliente = response.data.usuario;
     const nombre = response.data.nombreCompleto;
     const rutinaUsuario = response.data.rutina;
@@ -38,10 +38,10 @@ router.post('/crearProgreso', async (req, res) => {
 
 async function nuevoPeso(peso, rutinaUsuario, usuario) {
   try {
-    const rutinaData = (await axios.get(`http://localhost:3002/rutina/${rutinaUsuario}`)).data;
+    const rutinaData = (await axios.get(`http://192.168.100.2:3002/rutina/${rutinaUsuario}`)).data;
     const pesoRutina = rutinaData[0].objetivoKilos;
     const pesoNuevo = peso + pesoRutina;
-    await axios.put(`http://localhost:3001/usuarios/${usuario}`, { peso: pesoNuevo });
+    await axios.put(`http://192.168.100.2:3001/usuarios/${usuario}`, { peso: pesoNuevo });
     return pesoNuevo;
   } catch (error) {
     console.error("Error al actualizar el peso del usuario:", error);
